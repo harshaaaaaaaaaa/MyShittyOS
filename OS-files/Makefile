@@ -16,7 +16,7 @@ mykernel.bin: linker.ld $(objects)
 install: mykernel.bin
 	sudo cp $< /boot/mykernel.bin
 
-mykernel.iso: mykernel.bin
+shit.iso: mykernel.bin
 	mkdir iso
 	mkdir iso/boot
 	mkdir iso/boot/grub
