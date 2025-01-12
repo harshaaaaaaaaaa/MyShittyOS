@@ -1,2 +1,2 @@
-It just boots for now. Just flash the .iso file
+Just flash the .iso file & it just boots for now.
 but working on it.
