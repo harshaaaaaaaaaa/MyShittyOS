@@ -18,15 +18,15 @@ extern "C" void callConstructors()
         (*i)();
 }
 
+extern "C" void __stack_chk_fail_local() {
+    while (1);
+}//to fix stack_chk_fail_local error
+
 extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnumber)
 {
     printf("BINGO!!! Shit's booted fr...");
 
     GlobalDescriptorTable gdt;
 
-    while (1);
-}
-
-extern "C" void __stack_chk_fail_local() {
     while (1);
 }
