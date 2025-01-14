@@ -20,7 +20,7 @@ extern "C" void callConstructors()
 
 extern "C" void __stack_chk_fail_local() {
     while (1);
-}//to fix stack_chk_fail_local error
+}//to fix stack_chk_fail_local error fix
 
 extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnumber)
 {
