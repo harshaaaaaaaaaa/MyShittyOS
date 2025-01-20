@@ -1,7 +1,7 @@
 #include "interrupts.h"
 
 
-void printf(char* str);
+void printf(const char* str);
 
 
 InterruptManager::GateDescriptor InterruptManager::interruptDescriptorTable[256];

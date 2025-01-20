@@ -1,9 +1,8 @@
-
-
 .set IRQ_BASE, 0x20
 .section .text
 
-.extern _ZN16InterruptManager15handleInterruptEhj
+.extern handleInterrupt
+.global IgnoreInterruptRequest
 .global _ZN16InterruptManager22IgnoreInterruptRequestEv
 
 .macro HandleExceptions num
@@ -51,3 +50,4 @@ _ZN16InterruptManager22IgnoreInterruptRequestEv:
 
 .data
     interruptnumber: .byte 0
+

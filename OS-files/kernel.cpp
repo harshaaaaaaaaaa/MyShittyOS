@@ -2,7 +2,7 @@
 #include "gdt.h"
 #include "interrupts.h"
 
-void printf(char* str)
+void printf(const char* str)
 {
     static uint16_t* VideoMemory = (uint16_t*)0xb8000;
 
