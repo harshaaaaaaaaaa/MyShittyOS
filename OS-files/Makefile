@@ -2,7 +2,7 @@ GPPPARAMS = -m32 -ffreestanding -fno-exceptions -fno-rtti -nostdlib -fno-builtin
 ASPARAMS =  --32 --gstabs
 LDPARAMS = -m elf_i386 -T linker.ld --no-warn-rwx-segments
 
-objects = loader.o gdt.o port.o interruptstubs.o interrupts.o kernel.o
+objects = loader.o gdt.o port.o interruptstubs.o interrupts.o kernel.o printf.o
 
 %.o: %.cpp
 	g++ $(GPPPARAMS) -o $@ -c $<
