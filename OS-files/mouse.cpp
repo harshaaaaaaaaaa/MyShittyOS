@@ -65,6 +65,7 @@ uint32_t MouseDriver::HandleInterrupt(uint32_t esp)
                                 | ((VideoMemory[80*y+x] & 0x0FFF));
 
 
+            //to slow down the mouse movement
             for (uint8_t i = 0; i < 3; i++)
             {
                 if ((buffer[0] & (0x1 << i)) != (buttons & (0x1 << i)))
@@ -78,7 +79,7 @@ uint32_t MouseDriver::HandleInterrupt(uint32_t esp)
         }
     }
 
-    uint8_t key = dataport.Read();
+    //uint8_t key = dataport.Read();
     
     return esp;
 }
