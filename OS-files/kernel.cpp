@@ -1,7 +1,8 @@
 #include "types.h"
 #include "gdt.h"
+#include "interrupts.h"
+#include "keyboard.h"
 
-extern "C" void printf(const char* str);
 
 void printf(char* str)
 {
@@ -52,12 +53,18 @@ extern "C" void __stack_chk_fail_local() {
     while (1);
 }//to fix stack_chk_fail_local error fix
 
-extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnumber)
+extern "C" void kernelMain(const void* multiboot_structure, uint32_t /*multiboot_magic*/)
 {
     printf("BINGO!!! Shit's booted fr...\n");
     printf("Next video?");
 
     GlobalDescriptorTable gdt;
 
+    InterruptManager interrupts(0x20, &gdt);
+
+    KeyboardDriver keyboard(&interrupts);
+    
+    interrupts.Activate();
+    
     while (1);
 }
