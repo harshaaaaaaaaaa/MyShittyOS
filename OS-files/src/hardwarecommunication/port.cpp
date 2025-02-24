@@ -1,4 +1,6 @@
-#include "port.h"
+#include <hardwarecommunication/port.h>
+using namespace osfiles::hardwarecommunication;
+using namespace osfiles::common;
 
 
 Port::Port(uint16_t portnumber) 

@@ -1,4 +1,8 @@
-#include "mouse.h"
+#include <drivers/mouse.h>
+
+using namespace osfiles::drivers;
+using namespace osfiles::common;
+using namespace osfiles::hardwarecommunication;
 
 MouseEventHandler::MouseEventHandler()
 {

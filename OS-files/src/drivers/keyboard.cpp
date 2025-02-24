@@ -1,4 +1,8 @@
-#include "keyboard.h"
+#include <drivers/keyboard.h>
+
+using namespace osfiles::drivers;
+using namespace osfiles::common;
+using namespace osfiles::hardwarecommunication;
 
 KeyboardEventHandler::KeyboardEventHandler()
 {

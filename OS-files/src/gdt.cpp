@@ -1,5 +1,8 @@
 
-#include "gdt.h"
+#include <gdt.h>
+
+using namespace osfiles;
+using namespace osfiles::common;
 
 GlobalDescriptorTable::GlobalDescriptorTable()
     : nullSegmentSelector(0, 0, 0),

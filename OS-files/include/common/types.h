@@ -1,6 +1,11 @@
 
-#ifndef _TYPES_h
-#define _TYPES_h
+#ifndef __OSFILES__COMMON__TYPES_h
+#define __OSFILES__COMMON__TYPES_h
+
+namespace osfiles
+{
+    namespace common
+    {
 
     typedef char int8_t;
     typedef unsigned char uint8_t;
@@ -13,8 +18,8 @@
 
     typedef long long int int64_t;
     typedef unsigned long long int uint64_t;
+    
+    }
+}
 
 #endif
-
-
-

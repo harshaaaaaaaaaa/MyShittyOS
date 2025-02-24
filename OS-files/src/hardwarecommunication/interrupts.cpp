@@ -1,4 +1,7 @@
-#include "interrupts.h"
+#include <hardwarecommunication/interrupts.h>
+
+using namespace osfiles::common;
+using namespace osfiles::hardwarecommunication;
 
 
 void printf(char* str);
