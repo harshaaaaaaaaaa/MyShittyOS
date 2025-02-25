@@ -3,7 +3,7 @@
 
 #include <common/types.h>
 
-namespace
+namespace osfiles
 {
     class GlobalDescriptorTable
     {
