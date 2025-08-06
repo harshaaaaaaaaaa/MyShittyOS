@@ -21,7 +21,7 @@ namespace osfiles
             virtual void OnActivate();
             virtual void OnMouseDown(osfiles::common::uint8_t button);
             virtual void OnMouseUp(osfiles::common::uint8_t button);
-            virtual void OnMouseMove(int x, int y);
+            virtual void OnMouseMove(int oldx, int oldy, int newx, int newy);
         };
 
         class MouseDriver : public osfiles::hardwarecommunication::InterruptHandler, public Driver
@@ -32,6 +32,8 @@ namespace osfiles
             osfiles::common::uint8_t buffer[3];
             osfiles::common::uint8_t offset;
             osfiles::common::uint8_t buttons;
+            
+            osfiles::common::int8_t x, y;
             
             MouseEventHandler* handler;
 

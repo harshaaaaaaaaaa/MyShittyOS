@@ -25,7 +25,8 @@ void printf(char* str)
                 x = 0;
                 break;
             default:
-                VideoMemory[80*y+x] = (VideoMemory[80*y+x] & 0xFF00) | str[i];
+                if(x < 80 && y < 25) // Add bounds checking
+                    VideoMemory[80*y+x] = (VideoMemory[80*y+x] & 0xFF00) | str[i];
                 x++;
                 break;
         }
@@ -70,16 +71,25 @@ class MouseToConsole : public MouseEventHandler
 {
     int8_t x, y;
 public:
-    void OnMouseMove(int oldx, int oldy, int x, int y)
+    void OnMouseMove(int oldx, int oldy, int newx, int newy)
     {
         static uint16_t* VideoMemory = (uint16_t*)0xb8000;
-        VideoMemory[80*oldy+oldx] = ((VideoMemory[80*oldy+oldx] & 0xF000) >> 4)
-                                 | ((VideoMemory[80*oldy+oldx] & 0x0F00) << 4)
-                                 | ((VideoMemory[80*oldy+oldx] & 0x00FF));
+        
+        // Bounds checking for old position
+        if(oldx >= 0 && oldx < 80 && oldy >= 0 && oldy < 25)
+        {
+            VideoMemory[80*oldy+oldx] = ((VideoMemory[80*oldy+oldx] & 0xF000) >> 4)
+                                     | ((VideoMemory[80*oldy+oldx] & 0x0F00) << 4)
+                                     | ((VideoMemory[80*oldy+oldx] & 0x00FF));
+        }
 
-        VideoMemory[80*y+x] = ((VideoMemory[80*y+x] & 0xF000) >> 4)
-                            | ((VideoMemory[80*y+x] & 0x0F00) << 4)
-                            | ((VideoMemory[80*y+x] & 0x00FF));
+        // Bounds checking for new position
+        if(newx >= 0 && newx < 80 && newy >= 0 && newy < 25)
+        {
+            VideoMemory[80*newy+newx] = ((VideoMemory[80*newy+newx] & 0xF000) >> 4)
+                                | ((VideoMemory[80*newy+newx] & 0x0F00) << 4)
+                                | ((VideoMemory[80*newy+newx] & 0x00FF));
+        }
     }
 };
 
@@ -116,7 +126,8 @@ extern "C" void kernelMain(const void* multiboot_structure, uint32_t /*multiboot
         KeyboardDriver keyboard(&interrupts, &kbhandler);
         drvManager.AddDriver(&keyboard);
 
-        MouseDriver mouse(&interrupts);
+        MouseToConsole mousehandler;
+        MouseDriver mouse(&interrupts, &mousehandler);
         drvManager.AddDriver(&mouse);
 
         printf("Initializing h/w 2\n");

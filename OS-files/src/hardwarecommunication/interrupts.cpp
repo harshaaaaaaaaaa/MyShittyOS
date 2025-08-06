@@ -45,8 +45,8 @@ void InterruptManager::SetInterruptDescriptorTableEntry(
 
 }
 
-InterruptManager::InterruptManager(uint16_t hardwareInterruptOffset, GlobalDescriptorTable* globalDescriptorTable)
-    : picMasterCommand(0x20),
+InterruptManager::InterruptManager(uint16_t hardwareInterruptOffset, GlobalDescriptorTable* globalDescriptorTable):
+      picMasterCommand(0x20),
       picMasterData(0x21),
       picSlaveCommand(0xA0),
       picSlaveData(0xA1)

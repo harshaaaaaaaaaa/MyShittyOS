@@ -30,7 +30,7 @@ namespace osfiles
             bool activated; // Add this line
 
         public:
-            KeyboardDriver(osfiles::hardwarecommunication::InterruptManager* manager, KeyboardEventHandler* handler);
+            KeyboardDriver(osfiles::hardwarecommunication::InterruptManager* manager, KeyboardEventHandler *handler);
             ~KeyboardDriver();
             virtual osfiles::common::uint32_t HandleInterrupt(osfiles::common::uint32_t esp);
             virtual void Activate();

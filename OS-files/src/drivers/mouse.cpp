@@ -24,7 +24,7 @@ void MouseEventHandler::OnMouseUp(uint8_t button)
 {
 }
 
-void MouseEventHandler::OnMouseMove(int x, int y)
+void MouseEventHandler::OnMouseMove(int oldx, int oldy, int newx, int newy)
 {
 }
 
@@ -32,11 +32,13 @@ void MouseEventHandler::OnMouseMove(int x, int y)
 
 
 MouseDriver::MouseDriver(InterruptManager* manager, MouseEventHandler* handler)
-    : InterruptHandler(manager, 0x2C),
+    : InterruptHandler(manager, 0x20 + 12),
     dataport(0x60),
     commandport(0x64)
     {
         this->handler = handler;
+        x = 40; // Start at center of 80-column screen
+        y = 12; // Start at center of 25-row screen
     }
 
     MouseDriver::~MouseDriver()
@@ -79,7 +81,17 @@ MouseDriver::MouseDriver(InterruptManager* manager, MouseEventHandler* handler)
         {
             if(buffer[1] != 0 || buffer[2] != 0)
             {
-                handler->OnMouseMove(buffer[1], -buffer[2]);
+                int8_t oldx = x, oldy = y;
+                
+                x += buffer[1];
+                if(x < 0) x = 0;
+                if(x >= 80) x = 79;
+                
+                y -= buffer[2]; // Mouse Y is inverted
+                if(y < 0) y = 0;
+                if(y >= 25) y = 24;
+                
+                handler->OnMouseMove(oldx, oldy, x, y);
             }
 
             for(uint8_t i = 0; i < 3; i++)
