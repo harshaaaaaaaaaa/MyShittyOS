@@ -34,6 +34,7 @@ namespace osfiles
             osfiles::common::uint8_t buttons;
             
             osfiles::common::int8_t x, y;
+            osfiles::common::uint8_t sensitivity; // for senstivity (trying)
             
             MouseEventHandler* handler;
 

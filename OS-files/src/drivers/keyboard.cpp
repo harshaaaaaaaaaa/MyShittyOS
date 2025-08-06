@@ -45,12 +45,18 @@ void KeyboardDriver::Activate()
     printf("Activating keyboard...\n");
     while(commandport.Read() & 0x1)
         dataport.Read();
-    commandport.Write(0xae); // activate interrupts
-    commandport.Write(0x20); // command 0x20 = read controller command byte
+        
+    // Enable keyboard interrupts
+    commandport.Write(0xAE); // activate interrupts
+    commandport.Write(0x20); // read controller command byte
     uint8_t status = (dataport.Read() | 1) & ~0x10;
     commandport.Write(0x60); // command 0x60 = set controller command byte
     dataport.Write(status);
-    dataport.Write(0xf4);
+
+    // for keyboard
+    dataport.Write(0xF4);
+    dataport.Read(); // Read acknowledgment
+    
     activated = true;
     printf("Keyboard activated.\n");
 }

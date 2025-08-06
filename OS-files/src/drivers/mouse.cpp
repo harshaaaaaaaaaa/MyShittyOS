@@ -39,6 +39,7 @@ MouseDriver::MouseDriver(InterruptManager* manager, MouseEventHandler* handler)
         this->handler = handler;
         x = 40; // Start at center of 80-column screen
         y = 12; // Start at center of 25-row screen
+        sensitivity = 1;
     }
 
     MouseDriver::~MouseDriver()
@@ -59,9 +60,10 @@ MouseDriver::MouseDriver(InterruptManager* manager, MouseEventHandler* handler)
         commandport.Write(0x60); // command 0x60 = set controller command byte
         dataport.Write(status);
 
+        //commands for mouse
         commandport.Write(0xD4);
         dataport.Write(0xF4);
-        dataport.Read();        
+        dataport.Read(); 
     }
     
     uint32_t MouseDriver::HandleInterrupt(uint32_t esp)
@@ -83,15 +85,23 @@ MouseDriver::MouseDriver(InterruptManager* manager, MouseEventHandler* handler)
             {
                 int8_t oldx = x, oldy = y;
                 
-                x += buffer[1];
-                if(x < 0) x = 0;
-                if(x >= 80) x = 79;
+                // Apply sensitivity scaling - divide movement by sensitivity factor
+                int8_t deltaX = (int8_t)buffer[1] / sensitivity;
+                int8_t deltaY = (int8_t)buffer[2] / sensitivity;
                 
-                y -= buffer[2]; // Mouse Y is inverted
-                if(y < 0) y = 0;
-                if(y >= 25) y = 24;
-                
-                handler->OnMouseMove(oldx, oldy, x, y);
+                // Only move if delta is significant enough
+                if(deltaX != 0 || deltaY != 0)
+                {
+                    x += deltaX;
+                    if(x < 0) x = 0;
+                    if(x >= 80) x = 79;
+                    
+                    y -= deltaY; // Mouse Y is inverted
+                    if(y < 0) y = 0;
+                    if(y >= 25) y = 24;
+                    
+                    handler->OnMouseMove(oldx, oldy, x, y);
+                }
             }
 
             for(uint8_t i = 0; i < 3; i++)
