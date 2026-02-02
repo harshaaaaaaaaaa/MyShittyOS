@@ -1,0 +1,13 @@
+obj/
+*.o
+mykernel.bin
+*.iso
+iso/
+*~
+*.swp
+*.swo
+*.d
+tmp/
+*.tmp
+.vscode/
+.DS_Store

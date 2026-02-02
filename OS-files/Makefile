@@ -10,7 +10,11 @@ objects = obj/loader.o \
 		  obj/hardwarecommunication/interrupts.o \
 		  obj/drivers/keyboard.o \
 		  obj/drivers/mouse.o \
-		  obj/kernel.o
+		  obj/kernel.o \
+		  obj/drivers/vga.o \
+		  obj/gui/graphics.o \
+		  obj/gui/cursor.o \
+		  obj/gui/desktop.o
 
 obj/%.o: src/%.cpp
 	mkdir -p $(dir $@)
@@ -44,6 +48,9 @@ shit.iso: mykernel.bin
 run: shit.iso
 	(killall VirtualBox && sleep 1) || true
 	VirtualBox --startvm 'ShittyOS' &
+
+run-qemu: shit.iso
+	qemu-system-i386 -cdrom shit.iso
 
 .PHONEY: clean 
 clean: 
